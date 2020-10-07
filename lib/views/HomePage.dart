@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> {
     return json.decode(response.body);
   }
 
+//https://developers.giphy.com/branch/master/static/header-logo-8974b8ae658f704a5b48a2d039b8ad93.gif
   @override
   void initState() {
     super.initState();
@@ -34,6 +35,14 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    const String _imgTilte =
+        'https://developers.giphy.com/branch/master/static/header-logo-8974b8ae658f704a5b48a2d039b8ad93.gif';
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Image.network(_imgTilte),
+        centerTitle: true,
+      ),
+    );
   }
 }
