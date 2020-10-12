@@ -35,7 +35,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    const String _imgTilte = 'https://developers.giphy.com/branch/master/static/header-logo-8974b8ae658f704a5b48a2d039b8ad93.gif';
+    const String _imgTilte =
+        'https://developers.giphy.com/branch/master/static/header-logo-8974b8ae658f704a5b48a2d039b8ad93.gif';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -57,9 +58,43 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(color: Colors.white, fontSize: 18.0),
               textAlign: TextAlign.center,
             ),
-          )
+          ),
+
+          //Expanded - ocupa toda o restando da coluna.
+          // FutureBuilder -  carregandos dados futuros...
+          Expanded(
+              child: FutureBuilder(
+                  future: _getGifs(), //dados da api
+                  // ignore: missing_return
+                  builder: (context, snapshot) {
+                    /*verificando os estados da resposta e definindo o que sera exibido na tela.*/
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting: //caso esteja aguardando
+                      case ConnectionState.none: //caso não estje fazendo nada
+                        return Container(
+                          //load animation
+                          width: 200.0,
+                          height: 200.0,
+                          alignment: Alignment.center,
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                            strokeWidth: 5.0,
+                          ),
+                        );
+                      default:
+                        if(snapshot.hasError) return Container();
+                          else
+                        _createGifTable(context,snapshot);
+                    }
+                  })),
         ],
       ),
     );
   }
+
+  Widget _createGifTable(BuildContext context,AsyncSnapshot snapshot){
+
+  }
 }
+
+
