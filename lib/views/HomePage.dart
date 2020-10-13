@@ -14,7 +14,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<Map> _getGifs() async {
     String urlMelhoresGiphys =  "https://api.giphy.com/v1/gifs/trending?api_key=91BuIxuKXmsHNxaZ636M4W5vMWLK6QjF&limit=20&rating=g";
-    String urlGiphysSearch =  "https://api.giphy.com/v1/gifs/search?api_key=91BuIxuKXmsHNxaZ636M4W5vMWLK6QjF&q=$_search&limit=20&offset=$_offSet&rating=g&lang=en";
+    String urlGiphysSearch =  "https://api.giphy.com/v1/gifs/search?api_key=91BuIxuKXmsHNxaZ636M4W5vMWLK6QjF&q=$_search&limit=19&offset=$_offSet&rating=g&lang=en";
     http.Response response;
 
     if (_search == null || _search.isEmpty)
@@ -33,8 +33,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    const String _imgTilte =
-        'https://developers.giphy.com/branch/master/static/header-logo-8974b8ae658f704a5b48a2d039b8ad93.gif';
+    const String _imgTilte = 'https://developers.giphy.com/branch/master/static/header-logo-8974b8ae658f704a5b48a2d039b8ad93.gif';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -60,6 +59,7 @@ class _HomePageState extends State<HomePage> {
               onSubmitted: (texto){
                setState(() {
                  _search = texto;
+                 _offSet = 0;
                });
               },
             ),
@@ -99,6 +99,14 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  int _getCount(List data){
+    if(_search == null) {
+      return data.length;
+    }else{
+        return data.length + 1;
+    }
+  }
+
   Widget _createGifTable(BuildContext context, AsyncSnapshot snapshot) {
     return GridView.builder(
         padding: EdgeInsets.all(10.0),
@@ -108,9 +116,11 @@ class _HomePageState extends State<HomePage> {
               mainAxisSpacing: 10.0,
               childAspectRatio:0.9
         ),
-      itemCount: snapshot.data['data'].length, // quantidade total de gigs carregas na resposta.
+      itemCount: _getCount( snapshot.data['data']), // quantidade total de gigs carregas na resposta.
+      // ignore: missing_return
       itemBuilder: (context, index){
           //GestureDetector() -  permite clikar na imagem e redirecionar o usuario para outra pagina caso se necessario.
+        if(_search == null || index < snapshot.data['data'].length){
           return GestureDetector(
             child: Image.network(
               snapshot.data['data']
@@ -122,6 +132,29 @@ class _HomePageState extends State<HomePage> {
               fit: BoxFit.cover,
             ),
           );
+        }
+        else{
+          return Container(
+            child: GestureDetector(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center, // alinhamento na linha principal
+                children: <Widget>[
+                  Icon(Icons.add, color: Colors.white, size: 70.0,),
+                  Text("Carregar mais...",
+                  style: TextStyle(color: Colors.white, fontSize: 22.0),
+                )
+                ],
+              ),
+
+              //onTap  - click
+              onTap: (){
+                setState(() {
+                  _offSet += 19;  //carrega mas 19 ghiphs
+                });
+              },
+            ),
+          );
+        }
       },
 
     );
