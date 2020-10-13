@@ -55,6 +55,13 @@ class _HomePageState extends State<HomePage> {
                   border: OutlineInputBorder()),
               style: TextStyle(color: Colors.white, fontSize: 18.0),
               textAlign: TextAlign.center,
+
+              //realizando busca com paramentros na pesquisa
+              onSubmitted: (texto){
+               setState(() {
+                 _search = texto;
+               });
+              },
             ),
           ),
 
