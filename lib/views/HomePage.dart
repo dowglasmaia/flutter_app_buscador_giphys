@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app_buscador_giphys/views/Git_page.dart';
 import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
@@ -131,6 +132,11 @@ class _HomePageState extends State<HomePage> {
               height: 30.00,
               fit: BoxFit.cover,
             ),
+           onTap: (){
+              //navegando para outro pagina com o gif clikado
+              Navigator.push(context,
+              MaterialPageRoute(builder: (context) => GifPage(snapshot.data["data"][index]) ));
+           },
           );
         }
         else{
