@@ -15,7 +15,6 @@
         )),
 
 **https://flutter.dev/docs**
-
-https://api.flutter.dev/flutter/widgets/SliverGrid-class.html
-
-https://jsonformatter.org/json-editor
+* https://api.flutter.dev/flutter/widgets/SliverGrid-class.html
+* https://jsonformatter.org/json-editor
+* https://pub.dev/packages/transparent_image
