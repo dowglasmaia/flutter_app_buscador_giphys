@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 //StatelessWidget - quando não iremos realizar modificações na pagina.
 class GifPage extends StatelessWidget {
@@ -17,8 +18,16 @@ class GifPage extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         backgroundColor: Colors.white,
-      ),
 
+        /*ação, para compartilhart o giph*/
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.share),
+              onPressed: () {
+                Share.share(_gifData['images']['fixed_height']['url'],);
+              }),
+        ],
+      ),
       backgroundColor: Colors.black,
       body: Center(
         child: Image.network(

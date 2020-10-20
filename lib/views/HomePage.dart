@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_buscador_giphys/views/Git_page.dart';
 import 'package:http/http.dart' as http;
+import 'package:share/share.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -137,6 +138,14 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(context,
               MaterialPageRoute(builder: (context) => GifPage(snapshot.data["data"][index]) ));
            },
+            //compartilhar segurando butão
+            onLongPress: (){
+              Share.share(snapshot.data['data']
+              [index]
+              ['images']
+              ['fixed_height']
+              ['url'], );
+            },
           );
         }
         else{
